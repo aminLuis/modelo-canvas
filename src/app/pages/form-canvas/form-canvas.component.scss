@@ -1,0 +1,22 @@
+mat-form-field{
+    margin-left: auto;
+    margin-right: auto;
+    width: 100%;
+}
+
+.scroll{
+    overflow-y: scroll;
+    height: 500px;
+    padding: 1rem;
+}
+
+.scroll::-webkit-scrollbar{
+    width: 5px;
+    height: 5px;
+    display: block;
+}
+
+.scroll::-webkit-scrollbar-thumb {
+    background: #0870AA;
+    border-radius: 4px;
+}

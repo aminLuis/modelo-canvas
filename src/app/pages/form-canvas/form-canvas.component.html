@@ -1,0 +1,190 @@
+<!-- <h1 mat-dialog-title>Dialog with elements</h1>
+<div mat-dialog-content>This dialog showcases the title, close, content and actions elements.</div> -->
+
+<div class="container">
+
+    <div class="scroll">
+
+    <p>
+        <mat-form-field appearance="outline">
+            <mat-label>Segmento de mercado</mat-label>
+            <textarea matInput></textarea>
+          </mat-form-field>    
+    </p>
+    
+    <p>
+        <mat-form-field appearance="outline">
+            <mat-label>Propuesta de valor</mat-label>
+            <textarea matInput></textarea>
+          </mat-form-field>    
+    </p>
+
+    <p>
+        <mat-form-field class="example-chip-list" appearance="outline">
+            <mat-label>Actividades clave</mat-label>
+            <mat-chip-grid #chipGrid aria-label="Enter fruits">
+              <mat-chip-row *ngFor="let actividad of actividades"
+                            (removed)="remove(actividad,'Actividades clave')"
+                            [editable]="true"
+                            (edited)="edit(actividad, $event,'Actividades clave')"
+                            [aria-description]="'press enter to edit ' + actividad.name">
+                {{actividad.name}}
+                <button matChipRemove [attr.aria-label]="'remove ' + actividad.name">
+                  <mat-icon>cancel</mat-icon>
+                </button>
+              </mat-chip-row>
+              <input placeholder="Nueva actividad ..."
+                     [matChipInputFor]="chipGrid"
+                     [matChipInputSeparatorKeyCodes]="separatorKeysCodes"
+                     [matChipInputAddOnBlur]="addOnBlur"
+                     (matChipInputTokenEnd)="add($event,'Actividades clave')"/>
+            </mat-chip-grid>
+          </mat-form-field>
+    </p>
+
+    <p>
+        <mat-form-field class="example-chip-list" appearance="outline">
+            <mat-label>Asociaciones clave</mat-label>
+            <mat-chip-grid #chipGrid2 aria-label="Enter fruits">
+              <mat-chip-row *ngFor="let actividad of asociaciones"
+                            (removed)="remove(actividad,'Asociaciones clave')"
+                            [editable]="true"
+                            (edited)="edit(actividad, $event,'Asociaciones clave')"
+                            [aria-description]="'press enter to edit ' + actividad.name">
+                {{actividad.name}}
+                <button matChipRemove [attr.aria-label]="'remove ' + actividad.name">
+                  <mat-icon>cancel</mat-icon>
+                </button>
+              </mat-chip-row>
+              <input placeholder="Nueva actividad ..."
+                     [matChipInputFor]="chipGrid2"
+                     [matChipInputSeparatorKeyCodes]="separatorKeysCodes"
+                     [matChipInputAddOnBlur]="addOnBlur"
+                     (matChipInputTokenEnd)="add($event,'Asociaciones clave')"/>
+            </mat-chip-grid>
+          </mat-form-field>
+    </p>
+
+    <p>
+        <mat-form-field class="example-chip-list" appearance="outline">
+            <mat-label>Canales</mat-label>
+            <mat-chip-grid #chipGrid3 aria-label="Enter fruits">
+              <mat-chip-row *ngFor="let actividad of canales"
+                            (removed)="remove(actividad,'Canales')"
+                            [editable]="true"
+                            (edited)="edit(actividad, $event,'Canales')"
+                            [aria-description]="'press enter to edit ' + actividad.name">
+                {{actividad.name}}
+                <button matChipRemove [attr.aria-label]="'remove ' + actividad.name">
+                  <mat-icon>cancel</mat-icon>
+                </button>
+              </mat-chip-row>
+              <input placeholder="Nueva actividad ..."
+                     [matChipInputFor]="chipGrid3"
+                     [matChipInputSeparatorKeyCodes]="separatorKeysCodes"
+                     [matChipInputAddOnBlur]="addOnBlur"
+                     (matChipInputTokenEnd)="add($event,'Canales')"/>
+            </mat-chip-grid>
+          </mat-form-field>
+    </p>
+
+    <p>
+        <mat-form-field class="example-chip-list" appearance="outline">
+            <mat-label>Estructura de costos</mat-label>
+            <mat-chip-grid #chipGrid4 aria-label="Enter fruits">
+              <mat-chip-row *ngFor="let actividad of estructura_costos"
+                            (removed)="remove(actividad,'Estructura costos')"
+                            [editable]="true"
+                            (edited)="edit(actividad, $event,'Estructura costos')"
+                            [aria-description]="'press enter to edit ' + actividad.name">
+                {{actividad.name}}
+                <button matChipRemove [attr.aria-label]="'remove ' + actividad.name">
+                  <mat-icon>cancel</mat-icon>
+                </button>
+              </mat-chip-row>
+              <input placeholder="Nueva actividad ..."
+                     [matChipInputFor]="chipGrid4"
+                     [matChipInputSeparatorKeyCodes]="separatorKeysCodes"
+                     [matChipInputAddOnBlur]="addOnBlur"
+                     (matChipInputTokenEnd)="add($event,'Estructura costos')"/>
+            </mat-chip-grid>
+          </mat-form-field>
+    </p>
+
+    <p>
+        <mat-form-field class="example-chip-list" appearance="outline">
+            <mat-label>Fuente de ingresos</mat-label>
+            <mat-chip-grid #chipGrid5 aria-label="Enter fruits">
+              <mat-chip-row *ngFor="let actividad of fuente_ingresos"
+                            (removed)="remove(actividad,'Fuente ingresos')"
+                            [editable]="true"
+                            (edited)="edit(actividad, $event,'Fuente ingresos')"
+                            [aria-description]="'press enter to edit ' + actividad.name">
+                {{actividad.name}}
+                <button matChipRemove [attr.aria-label]="'remove ' + actividad.name">
+                  <mat-icon>cancel</mat-icon>
+                </button>
+              </mat-chip-row>
+              <input placeholder="Nueva actividad ..."
+                     [matChipInputFor]="chipGrid5"
+                     [matChipInputSeparatorKeyCodes]="separatorKeysCodes"
+                     [matChipInputAddOnBlur]="addOnBlur"
+                     (matChipInputTokenEnd)="add($event,'Fuente ingresos')"/>
+            </mat-chip-grid>
+          </mat-form-field>
+    </p>
+
+    <p>
+        <mat-form-field class="example-chip-list" appearance="outline">
+            <mat-label>Recursos clave</mat-label>
+            <mat-chip-grid #chipGrid6 aria-label="Enter fruits">
+              <mat-chip-row *ngFor="let actividad of Recursos_clave"
+                            (removed)="remove(actividad,'Recursos clave')"
+                            [editable]="true"
+                            (edited)="edit(actividad, $event,'Recursos clave')"
+                            [aria-description]="'press enter to edit ' + actividad.name">
+                {{actividad.name}}
+                <button matChipRemove [attr.aria-label]="'remove ' + actividad.name">
+                  <mat-icon>cancel</mat-icon>
+                </button>
+              </mat-chip-row>
+              <input placeholder="Nueva actividad ..."
+                     [matChipInputFor]="chipGrid6"
+                     [matChipInputSeparatorKeyCodes]="separatorKeysCodes"
+                     [matChipInputAddOnBlur]="addOnBlur"
+                     (matChipInputTokenEnd)="add($event,'Recursos clave')"/>
+            </mat-chip-grid>
+          </mat-form-field>
+    </p>
+
+    <p>
+        <mat-form-field class="example-chip-list" appearance="outline">
+            <mat-label>Relaciones cliente</mat-label>
+            <mat-chip-grid #chipGrid7 aria-label="Enter fruits">
+              <mat-chip-row *ngFor="let actividad of relaciones_cliente"
+                            (removed)="remove(actividad,'Relaciones cliente')"
+                            [editable]="true"
+                            (edited)="edit(actividad, $event,'Relaciones cliente')"
+                            [aria-description]="'press enter to edit ' + actividad.name">
+                {{actividad.name}}
+                <button matChipRemove [attr.aria-label]="'remove ' + actividad.name">
+                  <mat-icon>cancel</mat-icon>
+                </button>
+              </mat-chip-row>
+              <input placeholder="Nueva actividad ..."
+                     [matChipInputFor]="chipGrid7"
+                     [matChipInputSeparatorKeyCodes]="separatorKeysCodes"
+                     [matChipInputAddOnBlur]="addOnBlur"
+                     (matChipInputTokenEnd)="add($event,'Relaciones cliente')"/>
+            </mat-chip-grid>
+          </mat-form-field>
+    </p>
+
+    </div>
+
+    <div mat-dialog-actions>
+        <button mat-button mat-dialog-close (click)="closeForm()">Close</button>
+    </div>
+
+</div>
+

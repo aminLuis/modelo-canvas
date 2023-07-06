@@ -1,5 +1,11 @@
 <div>
-       <button mat-fab color="primary" aria-label="Example icon button with a home icon">
+       <button mat-fab color="primary" aria-label="Example icon button with a home icon"
+       (click)="openForm()"
+       >
         <mat-icon>add</mat-icon>
       </button>
+</div>
+
+<div class="container shadow">
+    <app-table-canvas></app-table-canvas>
 </div>
