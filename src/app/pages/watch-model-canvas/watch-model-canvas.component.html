@@ -1,0 +1,84 @@
+<div class="canvas-container shadow">
+
+    <div class="canvas-header">
+        <h1 class="canvas-title">Modelo de negocio canvas</h1>
+    </div>
+    
+    <div class="system-grid">
+        <div class="item-grid">
+            <div class="item-title">
+                Asociaciones clave
+                <div class="item-content">
+                    <li *ngFor="let obj of asociaciones">{{obj.name}}</li>
+                </div>
+            </div>
+            
+        </div>
+        <div class="item-grid">
+            <div class="item-title">
+                Actividades clave
+                <div class="item-content">
+                    <li *ngFor="let obj of actividades">{{obj.name}}</li>
+                </div>
+            </div>
+            <div class="item-title">
+                Recursos clave
+                <div class="item-content">
+                    <li *ngFor="let obj of Recursos_clave">{{obj.name}}</li>
+                </div>
+            </div>
+        </div>
+        <div class="item-grid">
+            <div class="item-title">
+                Propuesta valor
+                <div class="item-content" *ngIf="canvas_model">
+                    {{canvas_model.propuesta_valor}}
+                </div>
+            </div>
+        </div>
+        <div class="item-grid">
+
+            <div class="item-title">
+                Relaciones con clientes
+                <div class="item-content">
+                    <li *ngFor="let obj of relaciones_cliente">{{obj.name}}</li>
+                </div>
+            </div>
+
+            <div class="item-title">
+                Canales
+                <div class="item-content">
+                    <li *ngFor="let obj of canales">{{obj.name}}</li>
+                </div>
+            </div>
+
+        </div>
+        <div class="item-grid">
+            <div class="item-title">
+                Segmento de mercado
+                <div class="item-content" *ngIf="canvas_model">
+                   {{canvas_model.segmento_mercado}}
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="system-grid-big">
+        <div class="item-grid">
+            <div class="item-title">
+                Estructura de costos
+                <div class="item-content">
+                    <li *ngFor="let obj of estructura_costos">{{obj.name}}</li>
+                </div>
+            </div>
+        </div>
+        <div class="item-grid">
+            <div class="item-title">
+                Fuentes de ingreso
+                <div class="item-content">
+                    <li *ngFor="let obj of fuente_ingresos">{{obj.name}}</li>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</div>

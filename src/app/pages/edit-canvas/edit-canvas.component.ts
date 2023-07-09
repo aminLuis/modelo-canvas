@@ -1,5 +1,5 @@
 import {COMMA, ENTER} from '@angular/cdk/keycodes';
-import { Component } from '@angular/core';
+import { Component, Inject, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { MatButtonModule } from '@angular/material/button';
 import { MatFormFieldModule } from '@angular/material/form-field';
@@ -12,6 +12,8 @@ import { MatIconModule } from '@angular/material/icon';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ReactiveFormsModule } from '@angular/forms';
 import { CanvasModelServiceService } from 'src/app/services/canvas-model-service.service';
+import { MAT_DIALOG_DATA } from '@angular/material/dialog';
+import { model_canvas } from 'src/app/interfaces/canvas-model.interface';
 import Swal from 'sweetalert2';
 
 export interface Texto {
@@ -19,20 +21,20 @@ export interface Texto {
 }
 
 @Component({
-  selector: 'app-form-canvas',
+  selector: 'app-edit-canvas',
   standalone: true,
-  imports: [CommonModule,MatButtonModule,
+  imports: [CommonModule,
+    MatButtonModule,
     MatFormFieldModule,
     MatInputModule,
     MatDialogModule,
     MatChipsModule,
     MatIconModule,
-    ReactiveFormsModule
-  ],
-  templateUrl: './form-canvas.component.html',
-  styleUrls: ['./form-canvas.component.scss']
+    ReactiveFormsModule],
+  templateUrl: './edit-canvas.component.html',
+  styleUrls: ['./edit-canvas.component.scss']
 })
-export class FormCanvasComponent {
+export class EditCanvasComponent implements OnInit{
 
   addOnBlur = true;
   readonly separatorKeysCodes = [ENTER, COMMA] as const;
@@ -46,18 +48,15 @@ export class FormCanvasComponent {
 
   form_canvas: FormGroup;
 
-  iteraciones: any[]=[
-  'Actividades clave',
-  'Asociaciones clave',
-  'Canales',
-  'Estructura costos',
-  'Fuente ingresos',
-  'Recursos clave',
-  'Relaciones cliente'
-]
-
-  constructor(private dialog:MatDialog, private form:FormBuilder, private model_canvas_service:CanvasModelServiceService){
+  constructor(private dialog:MatDialog,
+     private form:FormBuilder,
+      private model_canvas_service:CanvasModelServiceService,
+      @Inject(MAT_DIALOG_DATA) public data: model_canvas
+      ){
+        
+    this.set_data();
     this.form_canvas = this.form.group({
+      id:[''],
       segmento_mercado:['',Validators.required],
       propuesta_valor:['',Validators.required],
       canales:['',Validators.required],
@@ -68,6 +67,10 @@ export class FormCanvasComponent {
       asociaciones_clave:['',Validators.required],
       estructura_costos:['',Validators.required]
     });
+  }
+
+  ngOnInit(): void {
+      this.set_data();
   }
 
   add(event: MatChipInputEvent,texto:string): void {
@@ -192,8 +195,8 @@ export class FormCanvasComponent {
    
   }
 
-  save_canvas_model(){
-    if(this.form_canvas.valid){
+  update_canvas_model(){
+      this.form_canvas.value['id'] = this.data.id;
       this.form_canvas.value['canales'] = JSON.stringify(this.canales);
       this.form_canvas.value['relaciones_clientes'] = JSON.stringify(this.relaciones_cliente);
       this.form_canvas.value['fuente_ingresos'] = JSON.stringify(this.fuente_ingresos);
@@ -201,21 +204,29 @@ export class FormCanvasComponent {
       this.form_canvas.value['recursos_clave'] = JSON.stringify(this.Recursos_clave);
       this.form_canvas.value['asociaciones_clave'] = JSON.stringify(this.asociaciones);
       this.form_canvas.value['estructura_costos'] = JSON.stringify(this.estructura_costos);
+      this.form_canvas.value['segmento_mercado'] = this.data.segmento_mercado;
+      this.form_canvas.value['propuesta_valor'] = this.data.propuesta_valor;
 
-      console.log(this.form_canvas.value);
-
-      this.model_canvas_service.save_canvas_model(this.form_canvas.value).subscribe(res=>{
-        console.log(res);
-        this.form_canvas.reset();
-        this.mensaje_success('Modelo canvas registrado con exito !!');
+      this.model_canvas_service.update_canvas_model(this.form_canvas.value).subscribe(res=>{
         this.dialog.closeAll();
+        this.mensaje_success('Modelo canvas actualizado !!');
       });
-    }
+    
    //console.log(this.form_canvas.value); 
   }
 
   public closeForm(){
     this.dialog.closeAll();
+  }
+
+  public set_data(){
+    this.asociaciones = JSON.parse(this.data.asociaciones_clave+'');
+      this.actividades = JSON.parse(this.data.actividades_clave+'');
+      this.Recursos_clave = JSON.parse(this.data.recursos_clave+'');
+      this.relaciones_cliente = JSON.parse(this.data.relaciones_clientes+'');
+      this.estructura_costos = JSON.parse(this.data.estructura_costos+'');
+      this.fuente_ingresos = JSON.parse(this.data.fuente_ingresos+'');
+      this.canales = JSON.parse(this.data.canales+'');
   }
 
   public mensaje_success(mensaje:string){
@@ -227,5 +238,4 @@ export class FormCanvasComponent {
       timer: 2000
     })
   }
-
 }

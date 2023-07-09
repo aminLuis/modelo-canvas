@@ -10,6 +10,13 @@ import { MatPaginatorModule } from '@angular/material/paginator';
 import { ReactiveFormsModule } from '@angular/forms';
 import { FormsModule } from '@angular/forms';
 import { MatInputModule } from '@angular/material/input';
+import { MatIconModule } from '@angular/material/icon';
+import { MatMenuModule } from '@angular/material/menu';
+import { MatDialogModule } from '@angular/material/dialog';
+import { MatDialog, MatDialogRef } from '@angular/material/dialog';
+import { Router } from '@angular/router';
+import { EditCanvasComponent } from '../edit-canvas/edit-canvas.component';
+import Swal from 'sweetalert2';
 
 export interface UserData {
   id: string;
@@ -60,21 +67,29 @@ const NAMES: string[] = [
     MatPaginatorModule,
     ReactiveFormsModule,
     FormsModule,
-    MatInputModule],
+    MatInputModule,
+    MatIconModule,
+    MatMenuModule,
+    MatDialogModule
+  ],
   templateUrl: './table-canvas.component.html',
   styleUrls: ['./table-canvas.component.scss']
 })
 export class TableCanvasComponent implements OnInit, AfterViewInit{
 
-  displayedColumns: string[] = ['id', 'segmento_mercado', 'propuesta_valor', 'actividades_clave'];
+  displayedColumns: string[] = ['id', 'segmento_mercado', 'propuesta_valor', 'acciones'];
   dataSource: MatTableDataSource<model_canvas>;
 
   @ViewChild(MatPaginator) paginator!: MatPaginator;
   @ViewChild(MatSort) sort!: MatSort;
 
   public model_canvas:model_canvas[]=[];
+  subscription: any;
 
-  constructor(private model_canvas_service:CanvasModelServiceService){
+  constructor(private model_canvas_service:CanvasModelServiceService,
+     private router:Router,
+     private dialog: MatDialog
+     ){
     const users = Array.from({length: 100}, (_, k) => createNewUser(k + 1));
 
     // Assign the data to the data source for the table to render
@@ -97,6 +112,9 @@ export class TableCanvasComponent implements OnInit, AfterViewInit{
 
   ngOnInit(): void {
       this.get_canvas_models();
+      this.subscription = this.model_canvas_service.reload.subscribe(()=>{
+        this.get_canvas_models();
+      });
   }
 
   public get_canvas_models(){
@@ -107,6 +125,39 @@ export class TableCanvasComponent implements OnInit, AfterViewInit{
         console.log(res);
       }
     });
+  }
+
+  public navigateCanvasModel(id:string){
+    this.router.navigate(['/watch-canvas/',id]);
+  }
+
+  public open_edit_canvas(data:model_canvas){
+    this.dialog.open(EditCanvasComponent,{
+      width:'60%',
+      data:data
+    });
+  }
+
+  public delete_canvas(id:string){
+    Swal.fire({
+      title: '¿Seguro que desea eliminar el registro?',
+      text: "Será eliminado permanentemente!",
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonColor: '#3085d6',
+      cancelButtonColor: '#d33',
+      confirmButtonText: 'Si, deseo eliminarlo!'
+    }).then((result) => {
+      if (result.isConfirmed) {
+        this.model_canvas_service.delete_canvas_model(id).subscribe(res=>{
+        });
+        Swal.fire(
+          'Eliminado!',
+          'Se ha eliminado el registro.',
+          'success'
+        )
+      }
+    })
   }
 
 }

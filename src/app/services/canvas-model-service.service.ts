@@ -29,7 +29,7 @@ export class CanvasModelServiceService {
     );
   }
 
-  get_canvas_model(id:String):Observable<model_canvas>{
+  get_canvas_model(id:string):Observable<model_canvas>{
     return this.http.get<model_canvas>(api_model_canvas+"/"+id)
     .pipe(
       catchError(error=>{

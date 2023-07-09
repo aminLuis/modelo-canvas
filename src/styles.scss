@@ -11,3 +11,24 @@ body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
 .shadow {
     box-shadow: 2px 2px 5px #999;
 }
+
+.success{
+    background-color: green !important;
+    color: white !important;
+}
+
+.error{
+    background-color: red !important;
+    color: white !important;
+}
+
+.info{
+    background-color: rgb(94, 209, 209) !important;
+    color: white !important;
+}
+
+.no-background{
+    background-color: white !important;
+    border: none;
+    cursor:pointer;
+}

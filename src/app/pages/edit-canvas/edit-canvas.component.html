@@ -2,19 +2,23 @@
 
     <div class="scroll">
 
-    <form [formGroup]="form_canvas" (ngSubmit)="save_canvas_model()">
+    <form [formGroup]="form_canvas" (ngSubmit)="update_canvas_model()">
 
     <p>
         <mat-form-field appearance="outline">
             <mat-label>Segmento de mercado</mat-label>
-            <textarea matInput formControlName="segmento_mercado"></textarea>
+            <textarea matInput formControlName="segmento_mercado"
+            [(ngModel)]="data.segmento_mercado"
+            ></textarea>
           </mat-form-field>    
     </p>
     
     <p>
         <mat-form-field appearance="outline">
             <mat-label>Propuesta de valor</mat-label>
-            <textarea matInput formControlName="propuesta_valor"></textarea>
+            <textarea matInput formControlName="propuesta_valor"
+            [(ngModel)]="data.propuesta_valor"
+            ></textarea>
           </mat-form-field>    
     </p>
 
@@ -185,8 +189,8 @@
       <button 
       class="success shadow" 
       mat-button
-      [disabled]="!form_canvas.valid"
-      >Guardar</button>
+      
+      >Actualizar</button>
     </div>
   
   </form>
@@ -198,4 +202,5 @@
     </div> -->
 
 </div>
+
 

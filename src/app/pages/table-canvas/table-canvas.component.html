@@ -1,5 +1,5 @@
 <mat-form-field appearance="outline">
-    <mat-label>Filter</mat-label>
+    <mat-label>Filtrar</mat-label>
     <input matInput (keyup)="applyFilter($event)" placeholder="Ex. Mia" #input>
   </mat-form-field>
   
@@ -14,20 +14,55 @@
   
       <!-- Progress Column -->
       <ng-container matColumnDef="segmento_mercado">
-        <th mat-header-cell *matHeaderCellDef mat-sort-header> Progress </th>
-        <td mat-cell *matCellDef="let row"> {{row.segmento_mercado}}% </td>
+        <th mat-header-cell *matHeaderCellDef mat-sort-header> Segmento de mercado </th>
+        <td mat-cell *matCellDef="let row"> {{row.segmento_mercado}}</td>
       </ng-container>
   
       <!-- Name Column -->
       <ng-container matColumnDef="propuesta_valor">
-        <th mat-header-cell *matHeaderCellDef mat-sort-header> Name </th>
+        <th mat-header-cell *matHeaderCellDef mat-sort-header> Propuesta valor </th>
         <td mat-cell *matCellDef="let row"> {{row.propuesta_valor}} </td>
       </ng-container>
   
       <!-- Fruit Column -->
-      <ng-container matColumnDef="actividades_clave">
-        <th mat-header-cell *matHeaderCellDef mat-sort-header> Fruit </th>
+      <!-- <ng-container matColumnDef="actividades_clave">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header> Actividades clave </th>
         <td mat-cell *matCellDef="let row"> {{row.actividades_clave}} </td>
+      </ng-container> -->
+
+       <!-- Fruit Column -->
+       <ng-container matColumnDef="acciones">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header> Acciones </th>
+        <td mat-cell *matCellDef="let row"> 
+          <button class="no-background" mat-icon-button [matMenuTriggerFor]="menu" aria-label="Example icon-button with a menu">
+            <mat-icon>more_vert</mat-icon>
+          </button>
+          <mat-menu #menu="matMenu">
+            <button mat-menu-item
+            (click)="navigateCanvasModel(row.id)"
+            >
+              <mat-icon>feed</mat-icon>
+              <span>Ver canvas</span>
+            </button>
+           
+            <button mat-menu-item
+            (click)="open_edit_canvas(row)"
+            >
+              <mat-icon>edit</mat-icon>
+              <span>Editar</span>
+            </button>
+
+            <button mat-menu-item
+            (click)="delete_canvas(row.id)"
+            >
+              <mat-icon>delete</mat-icon>
+              <span>Eliminar</span>
+            </button>
+
+          </mat-menu>
+          
+        </td>
+        
       </ng-container>
   
       <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
